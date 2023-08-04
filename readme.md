@@ -21,7 +21,8 @@ Run in development
 
 I hope folks find this useful and/or interesting. I know I learned a lot working
 on it. If this you did, I'd love to hear from you (in part to know whether
-it's worth the extra effort of sharing stuff in the future).
+it's worth the extra effort of sharing stuff in the future). Also feel free to ping
+me if there are parts of the code that aren't clear that you'd like to better understand.
 
 My twitter is https://twitter.com/gabriel_tez.
 
