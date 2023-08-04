@@ -1,8 +1,7 @@
-This is the code for the fx(hash) project "follow my lead"
-TODO: Link to Project
+This is the code for the fx(hash) project found at at https://www.fxhash.xyz/generative/slug/follow-my-lead
 
-For more information, view the fx(text) article
-TODO: Link to Article
+For more information, view the fx(text) article at https://www.fxhash.xyz/article/follow-my-lead
+
 
 ### Setup
 Clone this project
