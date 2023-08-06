@@ -100,7 +100,7 @@ async function main() {
       if (isLocalHost && !query.get('seed')) {
         query.set('seed', seed);
       }
-      window.location.href = window.location.origin + '?' + query.toString();
+      window.location.search = query.toString();
     }
 
     // TODO: remove
@@ -119,7 +119,7 @@ async function main() {
       if (isLocalHost && !query.get('seed')) {
         query.set('seed', seed);
       }
-      window.location.href = window.location.origin + '?' + query.toString();
+      window.location.search = query.toString();
     }
 
     // Maybe leaving this in, but not going to mention it in the description.
