@@ -70,7 +70,7 @@ const App = () => {
     setHash(newHash);
   };
 
-  useEffect(() => handleGo(), [hash, animate]);
+  useEffect(() => handleGo(), [hash, animate, currentUrl]);
 
   const handleUrlChange: ChangeEventHandler<HTMLInputElement> = event => {
     setCurrentUrl(event.target.value);
@@ -91,9 +91,9 @@ const App = () => {
             value={currentUrl}
             onChange={handleUrlChange}
           />
-          <button disabled={currentUrl === lastUrl} onClick={() => handleGo()}>
+          {/* <button disabled={currentUrl === lastUrl} onClick={() => handleGo()}>
             Update
-          </button>
+          </button> */}
         </div>
         <div>
           Hash:
