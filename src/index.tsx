@@ -23,7 +23,12 @@ const styles = {
   },
 };
 
-function displayUrl(url: string, hash: string, parent: HTMLDivElement) {
+function displayUrl(
+  url: string,
+  hash: string,
+  animate: boolean,
+  parent: HTMLDivElement,
+) {
   const img = new Image();
   img.crossOrigin = 'Anonymous';
   img.src = url;
@@ -33,7 +38,7 @@ function displayUrl(url: string, hash: string, parent: HTMLDivElement) {
     console.log(img.width, img.height);
 
     const scale = Math.min(img.width, img.height) < 1000 ? 2 : 1;
-    main(parent, hash, img.width * scale, img.height * scale);
+    main(parent, hash, animate, img.width * scale, img.height * scale);
   };
 }
 
@@ -41,22 +46,31 @@ const App = () => {
   const [currentUrl, setCurrentUrl] = useState(
     'https://gateway.fxhash.xyz/ipfs/QmXP8qPwzwnuduvYaomfvKNyF38gyo2oDeakwiqXKwu2iQ',
   );
+  const [lastUrl, setLastUrl] = useState(currentUrl);
   const [hash, setHash] = useState(() => window.createHash());
+  const [animate, setAnimate] = useState(false);
+
   const canvasRef = useRef<HTMLDivElement>(null);
-  const handleGo = () => {
+  const handleGo = (withHash = hash) => {
     if (canvasRef.current && currentUrl) {
       displayUrl(
         currentUrl,
-        hash,
+        withHash,
+        animate,
         // 'https://gateway.fxhash.xyz/ipfs/QmajeWvwSqgqfhdvFDchLq3rL4dARuV4gEVCqQ4WVAZsG3',
         // https://gateway.fxhash.xyz/ipfs/QmRX3xDuQKD2H8dPBHckyJz7tSEjVuuNdreM8kuJJG9eaD
         canvasRef.current,
       );
     }
+    setLastUrl(currentUrl);
   };
-  const handleNewHash = () => setHash(window.createHash());
 
-  useEffect(() => handleGo(), []);
+  const handleNewHash = () => {
+    const newHash = window.createHash();
+    setHash(newHash);
+  };
+
+  useEffect(() => handleGo(), [hash, animate]);
 
   const handleUrlChange: ChangeEventHandler<HTMLInputElement> = event => {
     setCurrentUrl(event.target.value);
@@ -64,22 +78,24 @@ const App = () => {
   const handleHashChange: ChangeEventHandler<HTMLInputElement> = event => {
     setHash(event.target.value);
   };
+  const toggleAnimate = () => setAnimate(x => !x);
 
   return (
     <>
       <div style={styles.left}>
-        Url:
-        <input
-          type='text'
-          style={styles.input}
-          value={currentUrl}
-          onChange={handleUrlChange}
-        />
-        <button onClick={handleGo}>Update Image</button>
         <div>
-          <button style={styles.refresh} onClick={handleNewHash}>
-            🔄
+          Url:
+          <input
+            type='text'
+            style={styles.input}
+            value={currentUrl}
+            onChange={handleUrlChange}
+          />
+          <button disabled={currentUrl === lastUrl} onClick={() => handleGo()}>
+            Update
           </button>
+        </div>
+        <div>
           Hash:
           <input
             type='text'
@@ -87,6 +103,13 @@ const App = () => {
             value={hash}
             onChange={handleHashChange}
           />{' '}
+          <button style={styles.refresh} onClick={handleNewHash}>
+            🔄
+          </button>
+        </div>
+        <div>
+          Animate:{' '}
+          <input type='checkbox' checked={animate} onClick={toggleAnimate} />
         </div>
       </div>
       <div style={styles.right} ref={canvasRef} />

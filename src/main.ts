@@ -8,6 +8,7 @@ const numInitialSteps = 300;
 export default async function main(
   root: HTMLElement,
   hash: string,
+  animate: boolean,
   ...renderDim: Point
 ) {
   const glScale = 0.5;
@@ -19,11 +20,16 @@ export default async function main(
   const seed = hash || querySeed || window.$fx.hash || Date.now().toString();
 
   const freshStart = query.get('fresh') === 'true';
-  const animate = query.get('animate') === 'true';
 
   // TODO: remove for prod
   // (window as any).lastStep = numInitialSteps;
   // (window as any).injectEnabled = true;
+
+  // root.removeChild(root.children[0]);
+
+  if (root.firstChild) {
+    root.removeChild(root.firstChild);
+  }
 
   const ctx = createCanvas(...renderDim, {}, root);
 
