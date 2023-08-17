@@ -8,6 +8,12 @@
     <meta property="og:image" content="%PUBLIC_URL%/favicon.ico" />
 
     <script id="fxhash-snippet">
+      window.createHash = () => "oo" +
+          Array(49)
+            .fill(0)
+            .map((_) => alphabet[(Math.random() * alphabet.length) | 0])
+            .join("")
+
       //---- do not edit the following code
       let search = new URLSearchParams(window.location.search)
       let alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
@@ -366,7 +372,7 @@
     <title>follow my lead</title>
     <style>
       body { margin: 0 }
-      #root { display: flex; justify-content: center; align-items: center; height: 100vh; }
+      #root { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
       canvas { max-width: 100vw; max-height: 100vh; }
     </style>
 

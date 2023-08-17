@@ -1,4 +1,5 @@
 interface Window {
+  createHash: () => string;
   $fx: {
     hash: string;
     rand(): () => number;

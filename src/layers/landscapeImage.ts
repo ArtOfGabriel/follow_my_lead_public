@@ -16,7 +16,7 @@ export function createLandscaperImage(
   extant: Point,
 ) {
   const [width, height] = extant;
-  const ctx = createCanvas(width, height, {}, document.body);
+  const ctx = createCanvas(width, height, {});
   ctx.canvas.setAttribute('id', 'l');
   ctx.canvas.style.display = 'none';
 
