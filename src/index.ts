@@ -3,13 +3,11 @@ import { Point, createCanvas } from './core';
 import { getFriendlyColor } from './Palette';
 import { testRun } from './tests/testController';
 
-const size = 2048;
-const glScale = 1 / 2;
-const renderDim: Point = [size, size];
-const trailDim: Point = [renderDim[0] * glScale, renderDim[1] * glScale];
 const numInitialSteps = 300;
 
-async function main() {
+async function main(...renderDim: Point) {
+  const glScale = 0.5;
+  const trailDim: Point = [renderDim[0] * glScale, renderDim[1] * glScale];
   const isLocalHost = window.location.host.includes('localhost');
   const query = new URLSearchParams(window.location.search);
   const querySeed = query.get('seed');
@@ -153,5 +151,14 @@ async function main() {
   });
 }
 
-main();
-// testRun();
+const img = new Image();
+img.crossOrigin = 'Anonymous';
+img.src =
+  'https://gateway.fxhash.xyz/ipfs/QmajeWvwSqgqfhdvFDchLq3rL4dARuV4gEVCqQ4WVAZsG3';
+img.onload = () => {
+  (window as any).img = img;
+  console.log(img.width, img.height);
+
+  const scale = Math.min(img.width, img.height) < 1000 ? 2 : 1;
+  main(img.width * scale, img.height * scale);
+};

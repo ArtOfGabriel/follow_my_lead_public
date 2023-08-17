@@ -2,6 +2,7 @@ import { Ctx, Point, Rng } from './core';
 import { createDepositor } from './layers/deposit';
 import { createDiffuser } from './layers/diffuse';
 import { LandscapeType, createLandscaperGL } from './layers/landscapeGL';
+import { createLandscaperImage } from './layers/landscapeImage';
 import { createScreenDrawer } from './layers/screen';
 import { AgentLayer } from './layers/agents';
 import { Palette } from './Palette';
@@ -23,7 +24,7 @@ export default class TrailMap {
 
   private depositor: ReturnType<typeof createDepositor>;
   private diffuser: ReturnType<typeof createDiffuser>;
-  private landscaper: ReturnType<typeof createLandscaperGL>;
+  private landscaper: ReturnType<typeof createLandscaperImage>;
   private screenDrawer: ReturnType<typeof createScreenDrawer>;
 
   constructor(
@@ -52,13 +53,7 @@ export default class TrailMap {
 
     // In retrospect, landscaper probably better belongs on Physarum vs TrailMap
     // but I'm not going to take the time to move it as this point.
-    this.landscaper = createLandscaperGL(
-      gl,
-      extant,
-      rng,
-      landscapeType,
-      landscapeBorder,
-    );
+    this.landscaper = createLandscaperImage(gl, extant);
     // this.landscaper = createLandscaper(gl, extant, rng);
     if ((window as any).lastStep !== undefined) {
       this.landscaper.debug();
